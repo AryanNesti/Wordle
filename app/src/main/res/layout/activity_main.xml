@@ -126,4 +126,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/b3c54099fef65b13a26b6139a90f5158_congratulations_colorful_quote" />
 
+    <Button
+        android:id="@+id/fourButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4 Letters"
+        android:layout_marginRight="110dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <Button
+        android:id="@+id/fiveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5 Letters"
+        android:layout_marginLeft="110dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <TextView
+        android:id="@+id/streaks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Streaks: 0"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

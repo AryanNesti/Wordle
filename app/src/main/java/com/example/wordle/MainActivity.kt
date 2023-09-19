@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import android.view.inputmethod.InputMethodManager
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,16 +34,20 @@ class MainActivity : AppCompatActivity() {
         val reset = findViewById<Button>(R.id.resetButton)
         val correct = findViewById<ImageView>(R.id.imageView)
         val wordle = findViewById<TextView>(R.id.textView)
+        val fiveLetters = findViewById<Button>(R.id.fiveButton)
+        val fourLetters = findViewById<Button>(R.id.fourButton)
+        val streaks = findViewById<TextView>(R.id.streaks)
+        var streak = 0
         var wordSize = 4
         var guess = 1
 
         findViewById<TextView>(R.id.solutionTextView).text = word
-
+        Log.v("Answer", word)
         button.setOnClickListener{
-            if (editText.text.length != 4) {
-                Toast
-                    .makeText(this, "Please enter a 4-letter word!", Toast.LENGTH_LONG)
-                    .show()
+            fiveLetters.visibility = View.INVISIBLE
+            fourLetters.visibility = View.INVISIBLE
+            if (editText.text.length != wordSize) {
+                Toast.makeText(this, "Please enter a 4-letter word!", Toast.LENGTH_LONG).show()
                 editText.text.clear()
                 return@setOnClickListener
             }
@@ -55,7 +60,6 @@ class MainActivity : AppCompatActivity() {
                 if(string[i] == word[i]){
                     color = Color.GREEN
                     check++
-                    Log.v(check.toString(), "passed")
                 } else if(string[i] in word){
                     color = Color.YELLOW
                 } else {
@@ -73,6 +77,18 @@ class MainActivity : AppCompatActivity() {
                     button.visibility = View.INVISIBLE
                     findViewById<TextView>(R.id.solutionTextView).visibility = View.VISIBLE
                     reset.visibility = View.VISIBLE
+                    streak++
+                    streaks.text = "Streaks: ${streak}"
+                    fiveLetters.visibility = View.VISIBLE
+                    fourLetters.visibility = View.VISIBLE
+                    this.hideKeyboard()
+                } else if(guess == 3){
+                    fiveLetters.visibility = View.VISIBLE
+                    fourLetters.visibility = View.VISIBLE
+                    streak = 0
+                    streaks.text = "Streaks: ${streak}"
+                    Toast.makeText(this, "Seems you didn't get it, Better Luck Next Time", Toast.LENGTH_LONG)
+                    this.hideKeyboard()
                 }
             }
             if(guess == 1){
@@ -89,6 +105,28 @@ class MainActivity : AppCompatActivity() {
             }
         }
         reset.setOnClickListener {
+            if(wordSize == 4){
+                guess1.text = "____"
+                guess2.text = "____"
+                guess3.text = "____"
+                word = FourLetterWordList.getRandomFourLetterWord()
+            } else if(wordSize == 5) {
+                guess1.text = "_____"
+                guess2.text = "_____"
+                guess3.text = "_____"
+                word = FiveLetterWordList.getRandomFourLetterWord()
+            }
+            correct.visibility = View.INVISIBLE
+            wordle.visibility = View.VISIBLE
+            guess = 1
+            Log.v("Answer", word)
+            findViewById<TextView>(R.id.solutionTextView).text = word
+            button.visibility = View.VISIBLE
+            findViewById<TextView>(R.id.solutionTextView).visibility = View.INVISIBLE
+            reset.visibility = View.INVISIBLE
+        }
+        fourLetters.setOnClickListener {
+            wordSize = 4
             guess1.text = "____"
             guess2.text = "____"
             guess3.text = "____"
@@ -96,10 +134,34 @@ class MainActivity : AppCompatActivity() {
             wordle.visibility = View.VISIBLE
             guess = 1
             word = FourLetterWordList.getRandomFourLetterWord()
+            Log.v("Answer", word)
             findViewById<TextView>(R.id.solutionTextView).text = word
             button.visibility = View.VISIBLE
             findViewById<TextView>(R.id.solutionTextView).visibility = View.INVISIBLE
             reset.visibility = View.INVISIBLE
+        }
+        fiveLetters.setOnClickListener {
+            wordSize = 5
+            guess1.text = "_____"
+            guess2.text = "_____"
+            guess3.text = "_____"
+            correct.visibility = View.INVISIBLE
+            wordle.visibility = View.VISIBLE
+            guess = 1
+            word = FiveLetterWordList.getRandomFourLetterWord()
+            Log.v("Answer", word)
+            findViewById<TextView>(R.id.solutionTextView).text = word
+            button.visibility = View.VISIBLE
+            findViewById<TextView>(R.id.solutionTextView).visibility = View.INVISIBLE
+            reset.visibility = View.INVISIBLE
+        }
+    }
+    private fun hideKeyboard() {
+        val view: View? = this.currentFocus
+        if (view != null) {
+            val inputMethodManager =
+                getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 }
