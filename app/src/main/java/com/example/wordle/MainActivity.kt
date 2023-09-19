@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         val fiveLetters = findViewById<Button>(R.id.fiveButton)
         val fourLetters = findViewById<Button>(R.id.fourButton)
         val streaks = findViewById<TextView>(R.id.streaks)
+        val enterGuess = findViewById<TextView>(R.id.textView7)
         var streak = 0
         var wordSize = 4
         var guess = 1
@@ -82,6 +83,8 @@ class MainActivity : AppCompatActivity() {
                     fiveLetters.visibility = View.VISIBLE
                     fourLetters.visibility = View.VISIBLE
                     this.hideKeyboard()
+                    editText.visibility = View.INVISIBLE
+                    enterGuess.visibility = View.INVISIBLE
                 } else if(guess == 3){
                     fiveLetters.visibility = View.VISIBLE
                     fourLetters.visibility = View.VISIBLE
@@ -89,6 +92,8 @@ class MainActivity : AppCompatActivity() {
                     streaks.text = "Streaks: ${streak}"
                     Toast.makeText(this, "Seems you didn't get it, Better Luck Next Time", Toast.LENGTH_LONG)
                     this.hideKeyboard()
+                    editText.visibility = View.INVISIBLE
+                    enterGuess.visibility = View.INVISIBLE
                 }
             }
             if(guess == 1){
@@ -124,6 +129,8 @@ class MainActivity : AppCompatActivity() {
             button.visibility = View.VISIBLE
             findViewById<TextView>(R.id.solutionTextView).visibility = View.INVISIBLE
             reset.visibility = View.INVISIBLE
+            editText.visibility = View.VISIBLE
+            enterGuess.visibility = View.VISIBLE
         }
         fourLetters.setOnClickListener {
             wordSize = 4
@@ -139,6 +146,8 @@ class MainActivity : AppCompatActivity() {
             button.visibility = View.VISIBLE
             findViewById<TextView>(R.id.solutionTextView).visibility = View.INVISIBLE
             reset.visibility = View.INVISIBLE
+            editText.visibility = View.VISIBLE
+            enterGuess.visibility = View.VISIBLE
         }
         fiveLetters.setOnClickListener {
             wordSize = 5
@@ -154,6 +163,8 @@ class MainActivity : AppCompatActivity() {
             button.visibility = View.VISIBLE
             findViewById<TextView>(R.id.solutionTextView).visibility = View.INVISIBLE
             reset.visibility = View.INVISIBLE
+            editText.visibility = View.VISIBLE
+            enterGuess.visibility = View.VISIBLE
         }
     }
     private fun hideKeyboard() {
